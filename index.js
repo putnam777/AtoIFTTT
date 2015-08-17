@@ -154,9 +154,10 @@ function callIFTTT(intent, session, callback)
             stringResult += chunk;
         });
         res.on('end', function () {
-            console.log("result = "+stringResult);
+        console.log("result = "+stringResult);
+		speechOutput = "OK, I sent "+setAction+" to IFTTT";
         callback(sessionAttributes,
-             buildSpeechletResponse(cardTitle, stringResult, repromptText, shouldEndSession));
+             buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); //Changed stingResult to speechOutput for better voice response flow
         });
     });
     post_req.on('error', function (e) {
