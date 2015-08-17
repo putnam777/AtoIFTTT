@@ -5,7 +5,7 @@ AtoIFTTT is short for "Alexa to If-this-then-that"; it's a simple [AWS Lambda] t
 ##Why IFTTT?
 This approach is convenient for two major reasons :
 
-1. Allows for custom IFTTT events to be launched launched without any additional coding / intent setup
+1. Allows for custom IFTTT events to be launched without any additional coding / intent setup
 2. It opens up any IFTTT Channel with a Action on it as a potential "tool" for Alexa. 
 
 ##Getting Started with AtoIFTTT
