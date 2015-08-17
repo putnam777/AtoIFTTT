@@ -1,6 +1,6 @@
 # AtoIFTTT
 
-AtoIFTTT is short for "Alexa to If-this-then-that"; it's a simple [AWS Lambda] that packages up an [Alexa Skills Kit] Intent along with up to three "slot" values and sends them via a Web Request as an input to a "recipe" using the IFTTT [Maker Channel].
+AtoIFTTT is short for "Alexa to If-this-then-that"; it's a simple [AWS Lambda] that packages up an [Alexa Skills Kit] Intent along with up to three "slot" values and sends them via a Web Request as an input to a "recipe" using the IFTTT [Maker Channel]. Made changes to pass spoken value instead of intent name so that there would be no need for coding / intent addidtions to pass any value to IFTTT Recipies.
 
 ##Why IFTTT?
 This approach is convenient for two major reasons :
