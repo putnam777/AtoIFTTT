@@ -19,7 +19,7 @@ This approach is convenient for two major reasons :
 6. Follow the remaining steps to finish creating the Lambda function and, most importantly, assigning a basic execution Role in order to allow the Alexa skill to make use of the Lambda.
 7. Once you've saved the Lambda and go back to the "Function List" page, you'll see your Lambda listed and below it, the label "Function ARN" followed by a string starting with "arn:" (e.g., "arn:aws:lambda:us-east-1:201599999999:function:Function-Name".  Take note of this as you'll need it to tell your Alexa Skill what function to call.
 
-That's it!  You're now ready to use IFTTT with Alexa! However, you'll probably benefit from a couple of examples of how to use IFTTT to prototype new Alexa Skills... if so, read on.
+That's it!  You're now ready to use IFTTT with Alexa!
 
 ##Examples
 
