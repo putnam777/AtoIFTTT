@@ -157,7 +157,7 @@ function callIFTTT(intent, session, callback)
         console.log("result = "+stringResult);
 		speechOutput = "OK, I sent "+setAction+" to IFTTT";
         callback(sessionAttributes,
-             buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); //Changed stingResult to speechOutput for better voice response flow
+             buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); //Pass stingResult instead of speechOutput for debugging if needed
         });
     });
     post_req.on('error', function (e) {
