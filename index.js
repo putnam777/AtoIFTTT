@@ -152,7 +152,7 @@ function callIFTTT(intent, session, callback)
         });
         res.on('end', function () {
         console.log("result = "+stringResult);
-        // With simple command like "turn lights off," Alexa will respond with the 1st option below. With a command like, "set hue
+        // With a simple command like "turn lights off," Alexa will respond with the 1st option below. With a command like, "set hue
         // lights to green," Alexa will respond with the 2nd option. This way the response is more natural, and can assist with
         // debugging if needed.
         if (setSplit2 === undefined)
