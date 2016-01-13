@@ -1,18 +1,21 @@
 /*
 ****** Pulls speech input and passes on to IFTTT Maker Channel for custom events *****
 */
+// Use commands like "Alexa, ask 'INVOCATION_NAME_HERE' to set hue lights to green." This script will parse 'set hue lights' as
+// the event trigger, and 'green' as 'value1' as a json body. You can also make simpler requests like, "Alexa, ask 'INVOCATION_NAME_HERE'
+// to  turn lights off."
 var https = require('https');
 
-var iftttMakerKey = "YOUR_IFTTT_MAKER_SECRET_HERE";
+var iftttMakerKey = "INSERT_YOUR_MAKER_KEY_HERE";
 
 exports.handler = function (event, context) {
     try {
         console.log("event.session.application.applicationId=" + event.session.application.applicationId);
 
 
-        if (event.session.application.applicationId !== "YOUR_AMAZON_APP_ID_HERE") {
-             context.fail("Invalid Application ID");
-         }
+//        if (event.session.application.applicationId !== "YOUR_AMAZON_APP_ID_HERE") {
+//             context.fail("Invalid Application ID");
+//         }
 
 
         if (event.session.new) {
@@ -96,54 +99,48 @@ function callIFTTT(intent, session, callback)
     var repromptText = "Please pass parameters for the " + intent.name + " intent";
     var i = 0;
     var slots = intent.slots;
+   
+   // The variable setSplit is intended to split the command into two parts. This only works if you use the word 'to' in your command.
+   // This code below setSplit removes all spacing between letters.
+   // The command is actually split 3 times. setSplit1 is meant to keep the spacing intact so that Alexa makes sense when she responds.
+   // See line # for reference.
+   // setSplit2 is going to be used as 'value1' as a json body for the Maker Channel. Visit https://ifttt.com/maker for more details.
+    var actionSlot = intent.slots.Action;
+    var setSplit = actionSlot.value.split(" to")[0];
+    setSplit = setSplit.replace(/\s+/g, '');
+    var setSplit1 = actionSlot.value.split(" to")[0];
+    var setSplit2 = actionSlot.value.split("to ")[1];
+    var jsonBody = { "value1": setSplit2};
     
-	//Pull the spoken text and format
-	var actionSlot = intent.slots.Action;
-	var setAction = actionSlot.value.toLowerCase();
-	setAction = setAction.replace(/\s+/g, '');
-	
     // Form the request, using the Intent value as the Event for the channel
-    var path = "/trigger/"+setAction+"/with/key/"+iftttMakerKey;
-    
-    // If there are additional values in the slots, pass up to three as values in 
-    // the payload.  Note that will send as many as are passed - it's just that the Maker Channel will
-    // only handle 3 at the moment.
+    var path = "/trigger/"+setSplit+"/with/key/"+iftttMakerKey;
     
     console.log("callIFTTT - Intent name = " + intent.name);
     
-    if ((typeof(slots) != 'undefined' && slots !== null) && Object.keys(slots).length > 0)
-    {
-        var key;
-        var value;
-        i = 0;
-        payload = "{";
-        for (key in slots)
-        {
-            if (slots.hasOwnProperty(key)) 
-            {
-                if (i > 0) {
-                    payload += ",";
-                }
-                payload += '"value'+(i+1)+'":"' + slots[key].value + '"';  
-                i++;
-            }
-        }
-        payload += "}";
-        console.log("callIFTTT - payload = " + payload);
-    }
+    // Simpler code than the original from **monty617** in order to pass a value forward as a json body to the maker channel.
+    // Due to my lack of coding knowledge, this may be a bit messy, yet it still works!
+   
+    var key;
+    var value;
+    payload = JSON.stringify(jsonBody);
     
-    // Options indicating where we should send the request to.
-    var post_options = {
+    console.log("callIFTTT - payload = " + payload);
+    
+    // Options indicating where we should send the request to. The 'data' portion below has been added to pass along the json body.
+    // The original code fuctioned differently.
+    
+        var post_options = {
         host: 'maker.ifttt.com',
         port: '443',
         path: path,
         method: 'POST',
+        data: jsonBody,
         headers: {
           'Content-Type': 'application/json'
         }
     };
   
-    console.log("Sending request to " + post_options.host + ":" + post_options.port + post_options.path);
+    console.log("Sending request to " + post_options.host + ":" + post_options.port + post_options.path + post_options.data);
     // Set up the request
     var post_req = https.request(post_options, function(res) {
         var stringResult = "";
@@ -155,7 +152,13 @@ function callIFTTT(intent, session, callback)
         });
         res.on('end', function () {
         console.log("result = "+stringResult);
-		speechOutput = "OK, I sent "+setAction+" to IFTTT";
+        // With simple command like "turn lights off," Alexa will respond with the 1st option below. With a command like, "set hue
+        // lights to green," Alexa will respond with the 2nd option. This way the response is more natural, and can assist with
+        // debugging if needed.
+        if (setSplit2 === undefined)
+		    speechOutput = "OK, I "+setSplit1+", on I-F-T-T-T";
+		else
+		    speechOutput = "OK, I "+setSplit1+" to "+setSplit2+" on I-F-T-T-T";
         callback(sessionAttributes,
              buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); //Pass stingResult instead of speechOutput for debugging if needed
         });
