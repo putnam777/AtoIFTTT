@@ -103,14 +103,13 @@ function callIFTTT(intent, session, callback)
    // The variable setSplit is intended to split the command into two parts. This only works if you use the word 'to' in your command.
    // This code below setSplit removes all spacing between letters.
    // The command is actually split 3 times. setSplit1 is meant to keep the spacing intact so that Alexa makes sense when she responds.
-   // See line # for reference.
+   // See line #s 158 to 161 for reference.
    // setSplit2 is going to be used as 'value1' as a json body for the Maker Channel. Visit https://ifttt.com/maker for more details.
     var actionSlot = intent.slots.Action;
     var setSplit = actionSlot.value.split(" to")[0];
     setSplit = setSplit.replace(/\s+/g, '');
     var setSplit1 = actionSlot.value.split(" to")[0];
     var setSplit2 = actionSlot.value.split("to ")[1];
-    var jsonBody = { "value1": setSplit2};
     
     // Form the request, using the Intent value as the Event for the channel
     var path = "/trigger/"+setSplit+"/with/key/"+iftttMakerKey;
@@ -119,7 +118,8 @@ function callIFTTT(intent, session, callback)
     
     // Simpler code than the original from **monty617** in order to pass a value forward as a json body to the maker channel.
     // Due to my lack of coding knowledge, this may be a bit messy, yet it still works!
-   
+    
+    var jsonBody = { "value1": setSplit2};
     var key;
     var value;
     payload = JSON.stringify(jsonBody);
