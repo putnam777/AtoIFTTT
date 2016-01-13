@@ -18,13 +18,17 @@ This approach is convenient for two major reasons :
 5. Near the top of the file, find the string "YOUR_IFTTT_MAKER_SECRET_HERE". Replace this string with your private key from step 3.
 6. Follow the remaining steps to finish creating the Lambda function and, most importantly, assigning a basic execution Role in order to allow the Alexa skill to make use of the Lambda.
 7. Once you've saved the Lambda and go back to the "Function List" page, you'll see your Lambda listed and below it, the label "Function ARN" followed by a string starting with "arn:" (e.g., "arn:aws:lambda:us-east-1:201599999999:function:Function-Name".  Take note of this as you'll need it to tell your Alexa Skill what function to call.
+8. Remember, if you want to pass a further value beyond the event trigger, make sure you use a command with the word 'to' before the value you want to pass. See the 2nd example below...
 
 That's it!  You're now ready to use IFTTT with Alexa!
 
 ##Examples
 
-"Alexa, Tell INVOCATION_NAME to test this"
-    -Passes "testthis" to ifttt maker channel
+"Alexa, Tell INVOCATION_NAME to turn living room lights on"
+    -Passes "turnlivingroomlightson" to ifttt maker channel
+    
+"Alexa, ask INVOCATION_NAME to set Hue Lights to green"
+    -Passes "sethuelights" as the event trigger, and "green" as 'value1' in json body format to ifttt maker channel
     
 [join]:https://ifttt.com/join
 [AWS Lambda]:http://aws.amazon.com/lambda
