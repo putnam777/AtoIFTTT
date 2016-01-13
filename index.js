@@ -156,9 +156,9 @@ function callIFTTT(intent, session, callback)
         // lights to green," Alexa will respond with the 2nd option. This way the response is more natural, and can assist with
         // debugging if needed.
         if (setSplit2 === undefined)
-		    speechOutput = "OK, I "+setSplit1+", on I-F-T-T-T";
+		    speechOutput = "OK, I "+setSplit1+", using I-F-T-T-T";
 		else
-		    speechOutput = "OK, I "+setSplit1+" to "+setSplit2+" on I-F-T-T-T";
+		    speechOutput = "OK, I "+setSplit1+" to "+setSplit2+" using I-F-T-T-T";
         callback(sessionAttributes,
              buildSpeechletResponse(cardTitle, speechOutput, repromptText, shouldEndSession)); //Pass stingResult instead of speechOutput for debugging if needed
         });
