@@ -14,8 +14,10 @@ This approach is convenient for two major reasons :
 1. If you aren't already a member, [join] IFTTT.
 2. Enable the [Maker Channel] on your account.
 3. When you view the Maker Channel in your account, you'll see a string labeled "Your secret key is:".  Note this string and save it for step 5.
-4. Using the code in "index.js", follow the instructions for [Creating a Lambda Function for an Alexa Skill], using the "index.js" code rather than the template code.
+4. Download the code for "index.js", and "words2numbers.js" 
 5. Near the top of the file, find the string "YOUR_IFTTT_MAKER_SECRET_HERE". Replace this string with your private key from step 3.
+6. Zip your edited "index.js," and "words2numbers.js" and name it.
+7. Follow the instructions for [Creating a Lambda Function for an Alexa Skill]. Select "Upload a .ZIP file" and click upload to upload your zipped files.
 6. Follow the remaining steps to finish creating the Lambda function and, most importantly, assigning a basic execution Role in order to allow the Alexa skill to make use of the Lambda.
 7. Once you've saved the Lambda and go back to the "Function List" page, you'll see your Lambda listed and below it, the label "Function ARN" followed by a string starting with "arn:" (e.g., "arn:aws:lambda:us-east-1:201599999999:function:Function-Name".  Take note of this as you'll need it to tell your Alexa Skill what function to call.
 8. Remember, if you want to pass a further value beyond the event trigger, make sure you use a command with the word 'to' before the value you want to pass. See the 2nd example below...
