@@ -6,6 +6,8 @@
 // to  turn lights off."
 var https = require('https');
 
+var words2numbers = require('./words2numbers.js');
+
 var iftttMakerKey = "INSERT_YOUR_MAKER_KEY_HERE";
 
 exports.handler = function (event, context) {
@@ -110,7 +112,10 @@ function callIFTTT(intent, session, callback)
     setSplit = setSplit.replace(/\s+/g, '');
     var setSplit1 = actionSlot.value.split(" to")[0];
     var setSplit2 = actionSlot.value.split("to ")[1];
-    
+    	if (setSplit2) {
+		// If setSplit2, has numbers written as words, convert to digits
+		setSplit2 = words2numbers(setSplit2);
+	}
     // Form the request, using the Intent value as the Event for the channel
     var path = "/trigger/"+setSplit+"/with/key/"+iftttMakerKey;
     
